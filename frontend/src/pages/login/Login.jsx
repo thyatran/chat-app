@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import useLogin from "../../hooks/useLogin.js";
-import { Toaster } from "react-hot-toast";
 
 const Login = () => {
   const [usernameOrEmail, setUsernameOrEmail] = useState("");
@@ -17,7 +16,6 @@ const Login = () => {
   return (
     <div className="flex flex-col items-center justify-center min-w-96 mx-auto">
       <div className="w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0">
-        <Toaster />
         <h1 className="text-3xl font-semibold text-center text-gray-950">
           Login <span className="text-blue-600">ChatApp</span>
         </h1>
@@ -37,7 +35,6 @@ const Login = () => {
               className="w-full input input-bordered h-10"
               value={usernameOrEmail}
               onChange={(e) => setUsernameOrEmail(e.target.value)}
-              required
             />
           </div>
 
@@ -55,7 +52,6 @@ const Login = () => {
               className="w-full input input-bordered h-10"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
             />
           </div>
 

@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useAuthContext } from "../context/AuthContext";
+import toast from "react-hot-toast";
 import axios from "axios";
-import { toast } from "react-hot-toast";
 
 const useLogin = () => {
   const [loading, setLoading] = useState(false);
+  const { setAuthUser } = useAuthContext();
 
   const login = async (usernameOrEmail, password) => {
+    const success = handleInputsErrors({ usernameOrEmail, password });
+    if (!success) return;
+
     setLoading(true);
 
     try {
@@ -18,9 +23,14 @@ const useLogin = () => {
       );
 
       const userData = await response.data;
-      localStorage.setItem("chat-user", JSON.stringify(userData));
+      if (userData === "Login successful.") {
+        localStorage.setItem("chat-user", JSON.stringify(userData));
+        setAuthUser(userData);
+        toast.success("User logged in successfully!");
+      } else {
+        toast.error(userData);
+      }
 
-      toast.success("User logged in successfully!");
       console.log(userData);
     } catch (error) {
       const errorMessage = error.response?.data || "An error occurred.";
@@ -33,3 +43,11 @@ const useLogin = () => {
 };
 
 export default useLogin;
+
+function handleInputsErrors({ usernameOrEmail, password }) {
+  if (!usernameOrEmail || !password) {
+    toast.error("Please fill in all the fields");
+    return false;
+  }
+  return true;
+}
