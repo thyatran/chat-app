@@ -132,18 +132,12 @@ const Signup = () => {
           </div>
 
           {/* Link to Login */}
-          {/* <Link
-            to={"/login"}
-            className="text-sm hover:underline hover:text-blue-600 mt-2 inline-block cursor-pointer text-gray-800"
-          >
-            {"Already have an account? Login."}
-          </Link> */}
-          {/* <Link
+          <Link
             to="/login"
             className="text-sm hover:underline hover:text-blue-600 mt-2 inline-block cursor-pointer text-gray-800"
           >
             Already have an account? Login.
-          </Link> */}
+          </Link>
 
           {/* Sign up button */}
           <div>

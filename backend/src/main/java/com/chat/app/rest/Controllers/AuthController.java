@@ -9,9 +9,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -70,9 +73,9 @@ public class AuthController {
 
     // Logout user
     @PostMapping("/logout")
-    public String logoutUser(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession(false);
+    public ResponseEntity<Map<String, String>> logoutUser(HttpServletRequest request, HttpServletResponse response) {
 
+        HttpSession session = request.getSession(false);
         if (session != null) {
             // Invalidate the session
             session.invalidate();
@@ -85,6 +88,8 @@ public class AuthController {
         cookie.setMaxAge(0); // Expire immediately
         response.addCookie(cookie);
 
-        return "Logout successful.";
+        Map<String, String> responseBody = new HashMap<>();
+        responseBody.put("message", "Logout successful");
+        return ResponseEntity.ok(responseBody);
     }
 }
