@@ -49,7 +49,7 @@ public class AuthController {
         newUser.setPasswordHash(hashedPassword);
         userRepo.save(newUser);
 
-        return "User registered successfully";
+        return "User registered successfully.";
     }
 
     // POST: Login authentication
