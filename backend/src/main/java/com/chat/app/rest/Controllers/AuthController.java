@@ -4,17 +4,18 @@ import com.chat.app.rest.Models.User;
 import com.chat.app.rest.Repos.UserRepo;
 import com.chat.app.rest.Requests.LoginRequest;
 import com.chat.app.rest.Requests.RegistrationRequest;
+import com.chat.app.rest.Responses.AuthResponse;
+import com.chat.app.rest.Responses.UserResponse;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -33,10 +34,10 @@ public class AuthController {
 
     // POST: Hash password and confirmation when registering a new user
     @PostMapping("/register")
-    public String registerUser(@RequestBody RegistrationRequest request) {
+    public ResponseEntity<String> registerUser(@RequestBody RegistrationRequest request) {
         // check if password and confirmation password match
         if (!request.getPassword().equals(request.getConfirmPassword())) {
-            return "Error: Password and Confirm Password do not match.";
+            return ResponseEntity.badRequest().body("Error: Password and Confirm Password do not match.");
         }
 
         // Hash password
@@ -49,31 +50,40 @@ public class AuthController {
         newUser.setPasswordHash(hashedPassword);
         userRepo.save(newUser);
 
-        return "User registered successfully.";
+        return ResponseEntity.ok("User registered successfully.");
     }
 
     // POST: Login authentication
     @PostMapping("/login")
-    public String loginUser(@RequestBody LoginRequest request) {
+    public ResponseEntity<AuthResponse> loginUser(@RequestBody LoginRequest request) {
         Optional<User> optionalUser = userRepo.findByUsernameOrEmail(request.getUsernameOrEmail(), request.getUsernameOrEmail());
 
         if (optionalUser.isEmpty()) {
-            return "Error: Invalid username or email.";
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new AuthResponse("Invalid username or email.", null));
         }
 
         User user = optionalUser.get();
 
         // Validate password
         if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
-            return "Error: Invalid password.";
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new AuthResponse("Invalid password", null));
         }
 
-        return "Login successful.";
+        UserResponse userResponse = new UserResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getProfilePicUrl()
+        );
+
+        AuthResponse authResponse = new AuthResponse("Login successful", userResponse);
+
+        return ResponseEntity.ok(authResponse);
     }
 
     // Logout user
     @PostMapping("/logout")
-    public ResponseEntity<Map<String, String>> logoutUser(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<String> logoutUser(HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession(false);
         if (session != null) {
@@ -88,8 +98,6 @@ public class AuthController {
         cookie.setMaxAge(0); // Expire immediately
         response.addCookie(cookie);
 
-        Map<String, String> responseBody = new HashMap<>();
-        responseBody.put("message", "Logout successful");
-        return ResponseEntity.ok(responseBody);
+        return ResponseEntity.ok("Logout successful.");
     }
 }

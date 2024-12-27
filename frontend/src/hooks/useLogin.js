@@ -22,19 +22,18 @@ const useLogin = () => {
         }
       );
 
-      const userData = await response.data;
-      if (userData === "Login successful.") {
-        localStorage.setItem("chat-user", JSON.stringify(userData));
-        setAuthUser(userData);
-        toast.success("User logged in successfully!");
-      } else {
-        toast.error(userData);
-      }
+      const data = await response.data;
 
-      console.log(userData);
+      if (data.error) {
+        toast.error(error);
+      }
+      localStorage.setItem("chat-user", JSON.stringify(data.user));
+      setAuthUser(data.user);
+      toast.success("User logged in successfully!");
+      console.log(data.user);
     } catch (error) {
-      const errorMessage = error.response?.data || "An error occurred.";
-      toast.error(errorMessage);
+      toast.error("Something went wrong. Please try again.");
+      console.error("Login Error: ", error);
     } finally {
       setLoading(false);
     }
