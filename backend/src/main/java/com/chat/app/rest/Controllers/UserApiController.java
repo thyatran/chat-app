@@ -34,24 +34,4 @@ public class UserApiController {
 
         return ResponseEntity.ok(filteredUsers);
     }
-
-//    // PUT update an existing user
-//    @PutMapping("/{id}")
-//    public ResponseEntity<User> updateUser(@PathVariable long id, @RequestBody User user) {
-//        User updatedUser = userService.updateUser(id, user);
-//        if (updatedUser == null) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        return ResponseEntity.ok(updatedUser);
-//    }
-//
-//    // DELETE user by ID
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteUser(@PathVariable long id) {
-//        boolean isDeleted = userService.deleteUser(id);
-//        if (!isDeleted) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        return ResponseEntity.noContent().build();
-//    }
 }

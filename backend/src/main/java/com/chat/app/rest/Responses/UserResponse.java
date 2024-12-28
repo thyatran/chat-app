@@ -1,23 +1,23 @@
 package com.chat.app.rest.Responses;
 
 public class UserResponse {
-    private Long id;
+    private Integer id;
     private String username;
     private String email;
     private String profilePicUrl;
 
-    public UserResponse(Long id, String username, String email, String profilePicUrl) {
+    public UserResponse(Integer id, String username, String email, String profilePicUrl) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.profilePicUrl = profilePicUrl;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
