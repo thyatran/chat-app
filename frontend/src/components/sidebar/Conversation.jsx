@@ -3,9 +3,9 @@ import useConversation from "../../zustand/useConversation.js";
 
 const Conversation = ({ conversation, lastIdx, emoji }) => {
   const { selectedConversation, setSelectedConversation } = useConversation();
+  const isSelected = selectedConversation?.id === conversation.id;
 
-  const isSelected = selectedConversation?.id === Conversation.id;
-  console.log(isSelected);
+  //console.log(isSelected);
   return (
     <>
       <div
@@ -22,12 +22,12 @@ const Conversation = ({ conversation, lastIdx, emoji }) => {
 
         <div className="flex flex-col flex-1">
           <div className="flex gap-3 justify-between">
-            <p className="font-bold text-gray-200">name</p>
-            <span className="text-xl">emoji</span>
+            <p className="font-bold text-gray-200">{conversation.username}</p>
+            <span className="text-xl">{emoji}</span>
           </div>
         </div>
       </div>
-      <div className="divider my-0 py-0 h-1" />
+      {!lastIdx && <div className="divider my-0 py-0 h-1" />}
     </>
   );
 };

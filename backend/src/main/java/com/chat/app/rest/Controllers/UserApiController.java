@@ -1,32 +1,34 @@
 package com.chat.app.rest.Controllers;
 
-import jakarta.servlet.http.HttpServletRequest;
+import com.chat.app.rest.Responses.UserResponse;
+import com.chat.app.rest.Services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserApiController {
 
+    @Autowired
+    private UserService userService;
+
+    // GET all users
     @GetMapping("/")
-    public String greet(HttpServletRequest request) {
-        return "Welcome";
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
+        List<UserResponse> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
-//
-//    private final UserService userService;
-//
-//    public UserApiController(UserService userService) {
-//        this.userService = userService;
-//    }
-//
-//    // GET all users
-//    @GetMapping
-//    public ResponseEntity<List<User>> getAllUsers(@RequestParam String loggedInUsername) {
-//        if (loggedInUsername == null || loggedInUsername.isEmpty()) {
-//            return ResponseEntity.badRequest().build();
-//        }
-//
+
+    @GetMapping("/greet")
+    public String greet() {
+        return "Hello there";
+    }
+
 //        List<User> allUsers = userService.getAllUsers();
 //
 //        // Filter out the logged-in user

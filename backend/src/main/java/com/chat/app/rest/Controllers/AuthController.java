@@ -57,7 +57,7 @@ public class AuthController {
 
         Cookie jwtCookie = new Cookie("jwt", token);
         jwtCookie.setHttpOnly(true);
-        jwtCookie.setSecure(false);
+        jwtCookie.setSecure(true);
         jwtCookie.setPath("/");
         jwtCookie.setMaxAge(60 * 60 * 10);
         response.addCookie(jwtCookie);
@@ -83,8 +83,8 @@ public class AuthController {
             user.getId(), user.getUsername(), user.getProfilePicUrl());
 
         Cookie jwtCookie = new Cookie("jwt", token);
-        jwtCookie.setHttpOnly(true);
-        jwtCookie.setSecure(false);
+        jwtCookie.setHttpOnly(false);
+        jwtCookie.setSecure(true);
         jwtCookie.setPath("/");
         jwtCookie.setMaxAge(60 * 60 * 10);
         response.addCookie(jwtCookie);
@@ -101,8 +101,8 @@ public class AuthController {
     public ResponseEntity<String> logout(HttpServletResponse response) {
 
         Cookie jwtCookie = new Cookie("jwt", null);
-        jwtCookie.setHttpOnly(true);
-        jwtCookie.setSecure(false);
+        jwtCookie.setHttpOnly(false);
+        jwtCookie.setSecure(true);
         jwtCookie.setPath("/");
         jwtCookie.setMaxAge(0);
         response.addCookie(jwtCookie);
