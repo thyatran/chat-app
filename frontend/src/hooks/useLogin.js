@@ -7,8 +7,8 @@ const useLogin = () => {
   const [loading, setLoading] = useState(false);
   const { setAuthUser } = useAuthContext();
 
-  const login = async (usernameOrEmail, password) => {
-    const success = handleInputsErrors({ usernameOrEmail, password });
+  const login = async (username, password) => {
+    const success = handleInputsErrors({ username, password });
     if (!success) return;
 
     setLoading(true);
@@ -16,7 +16,7 @@ const useLogin = () => {
     try {
       const response = await axios.post(
         "http://localhost:8080/api/auth/login",
-        { usernameOrEmail, password },
+        { username, password },
         {
           withCredentials: true,
         }
@@ -43,8 +43,8 @@ const useLogin = () => {
 
 export default useLogin;
 
-function handleInputsErrors({ usernameOrEmail, password }) {
-  if (!usernameOrEmail || !password) {
+function handleInputsErrors({ username, password }) {
+  if (!username || !password) {
     toast.error("Please fill in all the fields");
     return false;
   }

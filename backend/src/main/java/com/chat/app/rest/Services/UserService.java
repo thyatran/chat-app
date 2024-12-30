@@ -30,12 +30,19 @@ public class UserService {
         return user;
     }
 
-    public String verify(User user) {
-        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-        if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(user.getUsername());
-        } else {
-            return "fail";
+    public String verify(String username, String password) {
+        try {
+
+            Authentication authentication = authManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(username, password));
+
+            if (authentication.isAuthenticated()) {
+                return jwtService.generateToken(username);
+            }
+        } catch (Exception e) {
+
+            System.err.println("Authentication failed: " + e.getMessage());
         }
+            return "fail";
     }
 }

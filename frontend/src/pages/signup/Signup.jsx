@@ -6,16 +6,20 @@ import { Link } from "react-router-dom";
 const Signup = () => {
   const [inputs, setInputs] = useState({
     username: "",
-    email: "",
     password: "",
     confirmPassword: "",
+    file: null,
   });
 
   const { signup, loading } = useSignup();
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setInputs({ ...inputs, [name]: value });
+    const { name, value, type, files } = e.target;
+    if (type === "file") {
+      setInputs({ ...inputs, file: files[0] });
+    } else {
+      setInputs({ ...inputs, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -26,20 +30,11 @@ const Signup = () => {
       return;
     }
 
-    // handle sign up here
+    // You can send only the text inputs for now, file is ignored.
     await signup(inputs);
   };
 
   // HANDLE FILE UPLOADING
-  // const handleFileChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file && file.size < 5000000) {
-  //     // Example: Limit to 5MB
-  //     setFile(file); // Store the file for submission
-  //   } else {
-  //     toast.error("File size exceeds the limit.");
-  //   }
-  // };
 
   return (
     <div className="flex flex-col items-center justify-center min-w-96 mx-auto">
@@ -63,21 +58,6 @@ const Signup = () => {
               name="username"
               className="w-full input input-bordered h-10"
               value={inputs.username}
-              onChange={handleChange}
-            />
-          </div>
-
-          {/* email input */}
-          <div>
-            <label className="label p-2">
-              <span className="text-base label-text text-gray-800">Email</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Enter email"
-              name="email"
-              className="w-full input input-bordered h-10"
-              value={inputs.email}
               onChange={handleChange}
             />
           </div>
@@ -128,6 +108,7 @@ const Signup = () => {
               id="fileInput"
               name="file"
               className="w-full h-10 text-gray-800"
+              onChange={handleChange}
             />
           </div>
 

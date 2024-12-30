@@ -15,21 +15,19 @@ const useSignup = () => {
         "http://localhost:8080/api/auth/register",
         inputs,
         {
-          withCredentials: true, // Sends cookies
+          withCredentials: true,
         }
       );
 
-      const userData = await response.data;
-
-      if (userData === "User registered successfully.") {
-        localStorage.setItem("chat-user", JSON.stringify(userData));
-        setAuthUser(userData);
-        toast.success("User registered successfully!");
-      } else {
-        toast.error(userData);
+      const data = await response.data;
+      if (data.error) {
+        toast.error(error);
       }
 
-      console.log(userData);
+      localStorage.setItem("chat-user", JSON.stringify(data));
+      setAuthUser(data.user);
+      toast.success("User registered successfully!");
+      console.log(data.user);
     } catch (error) {
       const errorMessage = error.response?.data || "An error occurred.";
       toast.error(errorMessage);

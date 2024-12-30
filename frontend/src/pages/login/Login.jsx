@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import useLogin from "../../hooks/useLogin.js";
 
 const Login = () => {
-  const [usernameOrEmail, setUsernameOrEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const { login, loading } = useLogin();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(usernameOrEmail, password);
+    await login(username, password);
   };
 
   return (
@@ -21,20 +21,19 @@ const Login = () => {
         </h1>
 
         <form onSubmit={handleSubmit}>
-          {/* username or email input */}
           <div>
             <label className="label p-2">
               <span className="text-base label-text text-gray-800">
-                Username or Email
+                Username
               </span>
             </label>
             <input
               type="text"
-              placeholder="Enter username or email"
-              name="usernameOrEmail"
+              placeholder="Enter username"
+              name="username"
               className="w-full input input-bordered h-10"
-              value={usernameOrEmail}
-              onChange={(e) => setUsernameOrEmail(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
 
