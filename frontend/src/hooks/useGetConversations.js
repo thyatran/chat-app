@@ -25,7 +25,7 @@ const useGetConversations = () => {
           withCredentials: true,
         });
         const data = response.data;
-        console.log(data);
+        //console.log(data);
 
         if (data.error) {
           throw new Error(data.error);
