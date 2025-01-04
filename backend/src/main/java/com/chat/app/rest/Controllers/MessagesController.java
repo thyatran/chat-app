@@ -2,33 +2,58 @@ package com.chat.app.rest.Controllers;
 
 import com.chat.app.rest.Models.Conversations;
 import com.chat.app.rest.Models.Messages;
+import com.chat.app.rest.Repos.ConversationsRepo;
+import com.chat.app.rest.Repos.MessagesRepo;
+import com.chat.app.rest.Requests.MessageRequest;
+import com.chat.app.rest.Services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/send")
+@RequestMapping("/api/messages")
 public class MessagesController {
 
-    // POST request send message
-    @PostMapping("/{id}")
-    public ResponseEntity<String> sendMessage(@PathVariable Integer id, @RequestBody String message) {
+    @Autowired
+    private MessagesRepo messagesRepo;
 
-        Conversations convo = new Conversations();
+    @Autowired
+    private ConversationsRepo conversationsRepo;
+
+    @Autowired
+    private UserService userService;
+
+    // POST request send message
+    @PostMapping("/send/{id}")
+    public ResponseEntity<String> sendMessage(@PathVariable Integer id, @RequestBody MessageRequest request) {
+        String content = request.getMessage();
+        Integer senderId = userService.getLoggedinUserId();
+        System.out.println("logged in user / sender Id: " + senderId);
+        System.out.println("content " + content);
+
+        Conversations conversation = conversationsRepo.findByUser1IdAndUser2Id(senderId, id)
+                .orElseGet(() -> {
+                    Conversations newConversation = new Conversations();
+                    newConversation.setUser1Id(senderId);
+                    newConversation.setUser2Id(id);
+                    return conversationsRepo.save(newConversation);
+                });
+
 
         Messages newMessage = new Messages();
-        newMessage.setContent("aaa");
+        newMessage.setConversation(conversation);
+        newMessage.setSenderId(senderId);
+        newMessage.setContent(content);
+        messagesRepo.save(newMessage);
 
-
-        return ResponseEntity.ok("POST");
+        return ResponseEntity.ok("Message sent successfully.");
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<String> getMessages() {
-
-        return ResponseEntity.ok("GET");
+    @GetMapping("/{conversationId}")
+    public ResponseEntity<List<Messages>> getConversation(@PathVariable Integer conversationId) {
+        List<Messages> messages = messagesRepo.findByConversationId(conversationId);
+        return ResponseEntity.ok(messages);
     }
-
-    // routing: /api/messages
-    // get: /:id
-    // post: /send/:id
 }

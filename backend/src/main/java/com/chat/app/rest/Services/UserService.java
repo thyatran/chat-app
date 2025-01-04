@@ -61,4 +61,15 @@ public class UserService {
                 .map(user -> new UserResponse(user.getId(), user.getUsername(), user.getProfilePicUrl()))
                 .collect(Collectors.toList());
     }
+
+    public Integer getLoggedinUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String authUsername = authentication.getName();
+        User user = repo.findByUsername(authUsername);
+        if(user == null) {
+            throw new RuntimeException("user not found");
+        }
+
+        return user.getId();
+    }
 }

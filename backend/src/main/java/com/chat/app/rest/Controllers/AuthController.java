@@ -92,7 +92,7 @@ public class AuthController {
         //System.out.println("Stored Password (hashed from db): " + user.getPassword());
         //System.out.println("Provided Password (raw from user request): " + request.getPassword());
 
-        System.out.println(token);
+//        System.out.println(token);
 
         return ResponseEntity.ok(new AuthResponse("Login successfully", userResponse));
     }
@@ -102,7 +102,7 @@ public class AuthController {
 
         Cookie jwtCookie = new Cookie("jwt", null);
         jwtCookie.setHttpOnly(false);
-        jwtCookie.setSecure(true);
+        jwtCookie.setSecure(false);
         jwtCookie.setPath("/");
         jwtCookie.setMaxAge(0);
         response.addCookie(jwtCookie);

@@ -1,5 +1,6 @@
 package com.chat.app.rest.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -14,6 +15,7 @@ public class Messages {
 
     @ManyToOne
     @JoinColumn(name = "conversation_id", nullable = false)
+    @JsonBackReference
     private Conversations conversation;
 
     @Column(name = "sender_id", nullable = false)

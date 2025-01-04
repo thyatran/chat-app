@@ -1,5 +1,6 @@
 package com.chat.app.rest.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -24,6 +25,7 @@ public class Conversations {
     private Date createdAt;
 
     @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Messages> messages;
 
     public Conversations() {
