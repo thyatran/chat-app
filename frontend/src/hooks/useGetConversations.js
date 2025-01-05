@@ -1,13 +1,7 @@
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
-
-const getCookie = (name) => {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(";").shift();
-  return null;
-};
+import getCookie from "./getCookie";
 
 const useGetConversations = () => {
   const [loading, setLoading] = useState(false);
