@@ -1,6 +1,5 @@
 package com.chat.app.rest.Models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -13,13 +12,11 @@ public class Messages {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "conversation_id", nullable = false)
-    @JsonBackReference
-    private Conversations conversation;
-
     @Column(name = "sender_id", nullable = false)
     private Integer senderId;
+
+    @Column(name="receiver_id", nullable = false)
+    private Integer receiverId;
 
     @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
@@ -28,17 +25,24 @@ public class Messages {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    public Messages() {
+    @Column(name="updated_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "conversation_id", nullable = false)
+    private Conversations conversation;
+
+    @PrePersist
+    protected void onCreate() {
         this.createdAt = new Date();
+        this.updatedAt = new Date();
     }
 
-    public Messages(Conversations conversation, Integer senderId, String content) {
-        this.conversation = conversation;
-        this.senderId = senderId;
-        this.content = content;
-        this.createdAt = new Date();
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = new Date();
     }
-
 
     public Integer getId() {
         return id;
@@ -46,14 +50,6 @@ public class Messages {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Conversations getConversation() {
-        return conversation;
-    }
-
-    public void setConversation(Conversations conversation) {
-        this.conversation = conversation;
     }
 
     public Integer getSenderId() {
@@ -78,5 +74,29 @@ public class Messages {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Integer getReceiverId() {
+        return receiverId;
+    }
+
+    public void setReceiverId(Integer receiverId) {
+        this.receiverId = receiverId;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Conversations getConversation() {
+        return conversation;
+    }
+
+    public void setConversation(Conversations conversation) {
+        this.conversation = conversation;
     }
 }

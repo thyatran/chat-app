@@ -6,7 +6,7 @@ import useGetMessages from "../../hooks/useGetMessages";
 //import useListenMessages [new text sound]
 
 const Messages = () => {
-  const { loading, messages } = useGetMessages();
+  const { messages, loading } = useGetMessages();
   // useListenMessages();
   const lastMessageRef = useRef();
 

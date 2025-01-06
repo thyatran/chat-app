@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import useConversation from "../zustand/useConversation";
 import toast from "react-hot-toast";
 import getCookie from "./getCookie";
@@ -14,7 +14,9 @@ const useSendMessage = () => {
     try {
       const response = await axios.post(
         `http://localhost:8080/api/messages/send/${selectedConversation.id}`,
-        { message },
+        {
+          message,
+        },
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -23,8 +25,9 @@ const useSendMessage = () => {
         }
       );
       const data = await response.data;
-      console.log(data);
-      console.log(selectedConversation.id);
+      console.log("new message", data);
+      console.log("selected conversation id", selectedConversation?.id);
+      console.log("selected conversation", selectedConversation);
 
       if (data.error) {
         throw new Error(data.error);

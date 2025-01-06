@@ -3,6 +3,7 @@ package com.chat.app.rest.Models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,22 +21,38 @@ public class Conversations {
     @Column(name = "user2_id", nullable = false)
     private Integer user2Id;
 
+    @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Messages> messages = new ArrayList<>();
+
     @Column(name = "created_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Messages> messages;
+    @Column(name="updated_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = new Date();
+        this.updatedAt = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = new Date();
+    }
 
     public Conversations() {
-        this.createdAt = new Date();
+        
     }
 
     public Conversations(Integer user1Id, Integer user2Id) {
         this.user1Id = user1Id;
         this.user2Id = user2Id;
         this.createdAt = new Date();
+        this.updatedAt = new Date();
     }
 
     public Integer getId() {
@@ -62,6 +79,14 @@ public class Conversations {
         this.user2Id = user2Id;
     }
 
+    public List<Messages> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Messages> messages) {
+        this.messages = messages;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -70,11 +95,11 @@ public class Conversations {
         this.createdAt = createdAt;
     }
 
-    public List<Messages> getMessages() {
-        return messages;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setMessages(List<Messages> messages) {
-        this.messages = messages;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

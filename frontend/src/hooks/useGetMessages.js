@@ -23,7 +23,9 @@ const useGetMessages = () => {
           }
         );
         const data = await response.data;
-        console.log(data);
+        console.log("selectedConversation", selectedConversation);
+        console.log("selectedConversation2", selectedConversation.id);
+        console.log("Messages data", data);
 
         if (data.error) {
           throw new Error(data.error);
@@ -37,9 +39,9 @@ const useGetMessages = () => {
       }
     };
     if (selectedConversation?.id) getMessages();
-  }, [selectedConversation?.id, setMessages]);
+  }, [selectedConversation?.id, setMessages, jwtToken]);
 
-  return { loading, messages };
+  return { messages, loading };
 };
 
 export default useGetMessages;
