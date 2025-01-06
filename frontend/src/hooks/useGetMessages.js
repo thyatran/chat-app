@@ -23,9 +23,9 @@ const useGetMessages = () => {
           }
         );
         const data = await response.data;
-        console.log("selectedConversation", selectedConversation);
-        console.log("selectedConversation2", selectedConversation.id);
-        console.log("Messages data", data);
+        // console.log("selectedConversation", selectedConversation);
+        // console.log("selectedConversation2", selectedConversation.id);
+        // console.log("Messages data", data);
 
         if (data.error) {
           throw new Error(data.error);

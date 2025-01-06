@@ -45,7 +45,7 @@ public class Conversations {
     }
 
     public Conversations() {
-        
+
     }
 
     public Conversations(Integer user1Id, Integer user2Id) {

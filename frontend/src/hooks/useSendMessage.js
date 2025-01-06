@@ -25,9 +25,9 @@ const useSendMessage = () => {
         }
       );
       const data = await response.data;
-      console.log("new message", data);
-      console.log("selected conversation id", selectedConversation?.id);
-      console.log("selected conversation", selectedConversation);
+      //console.log("new message", data);
+      //console.log("selected conversation id", selectedConversation?.id);
+      //console.log("selected conversation", selectedConversation);
 
       if (data.error) {
         throw new Error(data.error);
