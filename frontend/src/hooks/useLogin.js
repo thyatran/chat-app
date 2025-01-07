@@ -25,15 +25,14 @@ const useLogin = () => {
       const data = await response.data;
 
       if (data.error) {
-        toast.error(error);
+        throw new Error(data.error);
       }
       localStorage.setItem("chat-user", JSON.stringify(data.user));
       setAuthUser(data.user);
       toast.success("User logged in successfully!");
       //console.log(data.user);
     } catch (error) {
-      toast.error("Something went wrong. Please try again.");
-      console.error("Login Error: ", error);
+      toast.error("Invalid username or password");
     } finally {
       setLoading(false);
     }

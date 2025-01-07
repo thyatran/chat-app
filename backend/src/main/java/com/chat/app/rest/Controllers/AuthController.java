@@ -69,15 +69,11 @@ public class AuthController {
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request, HttpServletResponse response) {
         User user = userRepo.findByUsername(request.getUsername());
 
-        if (user == null) {
-            return ResponseEntity.badRequest().body(new AuthResponse("Error: Incorrect username", null));
+        if (user == null || "fail".equals(service.verify(request.getUsername(), request.getPassword()))) {
+            return ResponseEntity.badRequest().body(new AuthResponse("Invalid username or password", null));
         }
 
         String token = service.verify(request.getUsername(), request.getPassword());
-
-        if ("fail".equals(token)) {
-            return ResponseEntity.badRequest().body(new AuthResponse("Error: Invalid password", null));
-        }
 
         UserResponse userResponse = new UserResponse(
             user.getId(), user.getUsername(), user.getProfilePicUrl());

@@ -1,18 +1,10 @@
 # Chat App
 
-A brief description of what this project does and who it's for
+A messaging platform designed for seamless communication between users. Built with backend in Java (Spring Boot), a frontend in ReactJS, and MySQL database.
 
 ## Demo
 
-Insert gif or link to demo
-
-## Environment Variables
-
-To run this project, you will need to add the following environment variables to your .env file
-
-`API_KEY`
-
-`ANOTHER_API_KEY`
+[insert link here]
 
 ## Features
 
@@ -21,49 +13,22 @@ To run this project, you will need to add the following environment variables to
   - User login/registration with Spring Security.
   - JWT-based authentication.
 
-- **Profile Management**
-
-  - Upload and update profile pictures.
-  - Edit user profile details.
-
 - **One-to-One Chat**
 
-  - Real-time text messaging.
-  - Typing indicators, read/delivery receipts, and timestamps.
-
-- **Message Features**
-
-  - Send/edit/delete text messages.
-  - Send/receive images with previews.
-
-- **Notifications**
-
-  - Sound alerts for new messages.
-  - Browser/tab notifications.
+  - Text messaging and timestamps.
 
 - **Frontend (React)**
 
-  - Responsive UI for mobile and desktop.
-  - Chat thread with message input and file attachment support.
+  - Responsive UI.
+  - Chat thread with message input.
 
 - **Backend (Java + Spring)**
 
   - REST APIs for chat functionalities.
-  - Real-time messaging with Spring WebSockets.
 
 - **Security**
 
-  - Encrypted communication.
-  - File upload validation.
-
-- **Performance & Scalability**
-
-  - Optimized APIs and WebSocket handling.
-  - Efficient media file storage.
-
-- **Optional Enhancements**
-  - Dark mode and chat search.
-  - Offline message queuing.
+  - Encrypted user password.
 
 ## Color Reference
 
@@ -79,23 +44,67 @@ To run this project, you will need to add the following environment variables to
 Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone git@github.com:thyatran/chat-app.git
 ```
 
-Go to the project directory
+Navigate to the project directory
 
 ```bash
-  cd my-project
+  cd chat-app
 ```
 
-Install dependencies
+Install dependencies for Frontend (ReactJS)
 
 ```bash
   npm install
 ```
 
-Start the server
+Start the Frontend Server
 
 ```bash
   npm run start
 ```
+
+Set up the backend
+
+```bash
+  ./mvnw clean install
+  ./mvnw spring-boot:run
+```
+
+## Application Properties
+
+To run this project, you will need to add the following environment variables to your `application.properties` file
+
+`application.properties`
+
+```bash
+  spring.application.name=RestAPI
+
+  # MySQL DataSource Configuration
+  spring.datasource.url=jdbc:mysql://localhost:3306/chat-app?useSSL=false&serverTimezone=UTC
+  spring.datasource.username=root
+  spring.datasource.password=dbpassword
+
+  # Hibernate JPA Configuration
+  spring.jpa.hibernate.ddl-auto=update
+```
+
+## Database Setup
+
+1. Create a new MySQL database:
+
+```bash
+CREATE DATABASE chat-app;
+```
+
+2. Import the necessary schema or tables for your app from the `database/chat-app.mysql` directory if needed.
+
+## In Progress
+
+To do:
+
+- Implement real-time WebSocket communication using Spring WebSocket.
+- Handle users' online status and real-time messaging.
+- Add the ability to edit, delete, and manage read receipts for messages.
+- Implement profile picture upload functionality.
