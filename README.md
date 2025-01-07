@@ -34,14 +34,15 @@ A messaging platform designed for seamless communication between users. Built wi
 
   - Encrypted user password.
 
-## Color Reference
+## In Progress
 
-| Color         | Hex                                                              |
-| ------------- | ---------------------------------------------------------------- |
-| Example Color | ![#0a192f](https://via.placeholder.com/10/0a192f?text=+) #0a192f |
-| Example Color | ![#f8f8f8](https://via.placeholder.com/10/f8f8f8?text=+) #f8f8f8 |
-| Example Color | ![#00b48a](https://via.placeholder.com/10/00b48a?text=+) #00b48a |
-| Example Color | ![#00d1a0](https://via.placeholder.com/10/00b48a?text=+) #00d1a0 |
+To do:
+
+- Fix send message bug
+- Implement real-time WebSocket communication using Spring WebSocket.
+- Handle users' online status and real-time messaging.
+- Add the ability to edit, delete, and manage read receipts for messages.
+- Implement profile picture upload functionality.
 
 ## Run Locally
 
@@ -103,12 +104,3 @@ CREATE DATABASE chat-app;
 ```
 
 2. Import the necessary schema or tables for your app from the `database/chat-app.mysql` directory if needed.
-
-## In Progress
-
-To do:
-
-- Implement real-time WebSocket communication using Spring WebSocket.
-- Handle users' online status and real-time messaging.
-- Add the ability to edit, delete, and manage read receipts for messages.
-- Implement profile picture upload functionality.
