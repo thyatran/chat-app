@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { BsSend } from "react-icons/bs";
 import useSendMessage from "../../hooks/useSendMessage";
 
@@ -18,6 +18,7 @@ const MessagesInput = () => {
       <div className="w-full relative">
         <input
           type="text"
+          aria-label="Message input"
           className="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 text-white"
           placeholder="Send a message"
           value={message}
@@ -26,6 +27,7 @@ const MessagesInput = () => {
 
         <button
           type="submit"
+          aria-label="Send message"
           className="absolute inset-y-0 end-0 flex items-center pe-3"
         >
           {loading ? (

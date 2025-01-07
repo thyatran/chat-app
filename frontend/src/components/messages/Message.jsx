@@ -5,14 +5,12 @@ import { extractTime } from "../../utils/extractTime.js";
 
 const Message = ({ message }) => {
   const { authUser } = useAuthContext();
-  const { selectedConversation } = useConversation();
+  // const { selectedConversation } = useConversation();
   const fromMe = message.senderId === authUser.id;
   const formattedTime = extractTime(message.createdAt);
   const chatClassName = fromMe ? "chat-end" : "chat-start";
   const bubbleBgColor = fromMe ? "bg-blue-500" : "";
-  const shakeClass = message.shouldShake ? "shake" : "";
-
-  // const formattedTime = extractTime(message.createdAt);
+  // const shakeClass = message.shouldShake ? "shake" : "";
 
   return (
     <div className={`chat ${chatClassName}`}>

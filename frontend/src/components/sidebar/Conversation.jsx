@@ -13,7 +13,8 @@ const Conversation = ({ conversation, lastIdx, emoji }) => {
         `}
         onClick={() => setSelectedConversation(conversation)}
       >
-        <div className="avatar online">
+        <div className={`avatar`}>
+          {/* online */}
           <div className="w-12 rounded-full">
             <img src="https://avatar.iran.liara.run/public" alt="user avatar" />
           </div>
