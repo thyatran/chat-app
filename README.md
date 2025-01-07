@@ -4,7 +4,11 @@ A messaging platform designed for seamless communication between users. Built wi
 
 ## Demo
 
-[insert link here]
+<img src="img/login.png" alt="My Image" width="400"/>
+
+<img src="img/signup.png" alt="My Image" width="400"/>
+
+<img src="img/homepage.png" alt="My Image" width="400"/>
 
 ## Features
 
