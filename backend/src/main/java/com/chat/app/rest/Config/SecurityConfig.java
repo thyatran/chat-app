@@ -34,6 +34,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/api/auth/register", "/api/auth/login", "/api/auth/logout").permitAll()
+                        .requestMatchers("/api/users/**").authenticated()
                         .anyRequest().authenticated())
 //                .formLogin(AbstractHttpConfigurer::disable)
 //                .formLogin(Customizer.withDefaults())

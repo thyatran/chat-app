@@ -62,7 +62,7 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public Integer getLoggedinUserId() {
+    public Integer getLoggedInUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String authUsername = authentication.getName();
         User user = repo.findByUsername(authUsername);

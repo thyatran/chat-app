@@ -33,7 +33,7 @@ const useGetConversations = () => {
       }
     };
     getConversation();
-  }, []);
+  }, [jwtToken]);
 
   return { loading, conversations };
 };

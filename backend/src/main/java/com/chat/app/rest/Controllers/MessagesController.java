@@ -32,7 +32,7 @@ public class MessagesController {
     public ResponseEntity<String> sendMessage(@PathVariable Integer id, @RequestBody MessageRequest request) {
         try {
             String content = request.getMessage();
-            Integer senderId = userService.getLoggedinUserId();
+            Integer senderId = userService.getLoggedInUserId();
 
             //System.out.println("logged in user / sender id: " + senderId);
             //System.out.println("content " + content);
@@ -63,7 +63,7 @@ public class MessagesController {
     @GetMapping("/{userToChatId}")
     public ResponseEntity<?> getConversation(@PathVariable Integer userToChatId) {
         try {
-            Integer senderId = userService.getLoggedinUserId();
+            Integer senderId = userService.getLoggedInUserId();
 
             Optional<Conversations> conversation = conversationsRepo.findByUser1IdAndUser2Id(senderId, userToChatId)
                     .or(() -> conversationsRepo.findByUser1IdAndUser2Id(userToChatId, senderId));

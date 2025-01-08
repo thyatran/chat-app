@@ -55,12 +55,12 @@ public class AuthController {
 
         UserResponse userResponse = new UserResponse(newUser.getId(), newUser.getUsername(), null);
 
-        Cookie jwtCookie = new Cookie("jwt", token);
-        jwtCookie.setHttpOnly(true);
-        jwtCookie.setSecure(true);
-        jwtCookie.setPath("/");
-        jwtCookie.setMaxAge(60 * 60 * 10);
-        response.addCookie(jwtCookie);
+//        Cookie jwtCookie = new Cookie("jwt", token);
+//        jwtCookie.setHttpOnly(true);
+//        jwtCookie.setSecure(true);
+//        jwtCookie.setPath("/");
+//        jwtCookie.setMaxAge(60 * 60 * 10);
+//        response.addCookie(jwtCookie);
 
         return ResponseEntity.ok(new AuthResponse("User registered successfully.", userResponse));
     }
